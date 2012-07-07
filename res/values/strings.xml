@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, NextLuasActivity!</string>
+    <string name="app_name">Luas Times</string>
+    
+    <string name="redLine">Red Line</string>
+    <string name="greenLine">Green Line</string>
+    
+    <string name="btnReload">Refresh</string>
+    
+    <string name="noNetwork">Can\'t access the Internet, please check your connection</string>
+    
+    <string name="connectorDialogTitle"></string>
+    <string name="connectorDialogMessage">Something went wrong when parsing the Luas site, please let the developer know!</string>
+    
+    <string name="ok">OK</string>
+    <string name="no">No</string>
+    <string name="quit">Quit App</string>
+    
+    <string name="inbound">Inbound</string>
+    <string name="outbound">Outbound</string>
+    
+    <string name="lastUpdate">Updated: %s</string>
+    <string name="updating">Updating&#8230;</string>
+    <string name="disclaimer">Times sourced from luas.ie. Please <a href="http://www.luas.ie/contact-form.html">report</a> any inaccuracy to them.</string>
+    
+    <string name="noDefaultTitle">Select a Default Line</string>
+    <string name="noDefaultMessage">You do not have a default line selected, please select a default line in the settings screen now.</string>
+    
+    <string name="switchDefaultTitle">Switch to New Default</string>
+    <string name="switchDefaultMessage">Current line is not your default line, switch to default line now?</string>
+    
+    <!-- PREFERENCES -->
+    
+    <string name="prefDefaultLineKey">prefDefaultLineKey</string>
+    <string name="prefDefaultLineTitle">Default Line</string>
+    <string name="prefDefaultLineMessage">Pick the line to use at startup. Must be selected before app can be used.</string>
+    
+    <string name="prefDefaultClosestKey">prefDefaultClosestKey</string>
+    <string name="prefDefaultClosestTitle">Select Nearest Stop</string>
+    <string name="prefDefaultClosestMessage">Auto-select the nearest stop and sort the others by distance.</string>
+    
+    <string name="prefAutoSwitchKey">prefAutoSwitchKey</string>
+    <string name="prefAutoSwitchTitle">Auto Stop Switch</string>
+    <string name="prefAutoSwitchMessage">Extends option above, re-selects the nearest stop when location changes</string>
+    
+    <string name="prefFilterEnableKey">prefFilterEnableKey</string>
+    <string name="prefFilterEnableTitle">Enable Stop List Filter</string>
+    <string name="prefFilterEnableMessage">Choose only the stops you want to be displayed</string>
+    
+    <string name="prefStopListRedKey">prefStopListKeyRed</string>
+    <string name="prefStopListRedTitle">Red Stop Filter</string>
+    <string name="prefStopListRedMessage">Select only the red stops that you want to be visible</string>
+
+	<string name="prefStopListGreenKey">prefStopListKeyGreen</string>
+    <string name="prefStopListGreenTitle">Green Stop Filter</string>
+    <string name="prefStopListGreenMessage">Select only the green stops that you want to be visible</string>
+
+	<string name="prefShowTimesKey">prefShowTimesKey</string>
+	<string name="prefShowTimesTitle">Show Arrival Times</string>
+	<string name="prefShowTimesMessage">Show estimated arrival time and countdown beside the "due in x minutes" number</string>
+
+	<string name="prefBasicCategory">Basic Preferences</string>
+    <string name="prefGeoCategory">Geolocation Preferences</string>
+    <string name="prefFilterCategory">Stop Filter Preferences</string>
+    <string name="prefTimingCategory">Time Preferences (Coming soon)</string>
+    
+
+    <!-- MENU  -->
+    
+    <string name="mainMenuChangeLine">Change Line</string>
+    <string name="mainMenuSettings">Settings</string>
+    <string name="mainMenuHelp">Help</string>
+    <string name="mainMenuBuy">Buy Ad-Free Version</string>
+    
+    <string name="lineMenuTallaghtPointLine">Red Line</string>
+    <string name="lineMenuGreenLine">Green Line</string>
+    
+    <string-array name="lineNamesArray">
+    	<item>Red Line</item>
+    	<item>Green Line</item>
+    </string-array>
+    
+    <!-- ACCESSIBILITY -->
+    <string name="accessRefresh">Click to refresh times</string>
+    <string name="pick_a_stop">Pick a stop</string>
+    <string name="stop">"Stop: "</string>
+    
+</resources>

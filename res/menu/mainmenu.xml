@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <item android:id="@+id/menuRefresh"
+        android:showAsAction="always|withText"
+        android:icon="@drawable/ic_action_refresh"  
+        android:title="@string/btnReload" />
+    
+  <item android:id="@+id/menuIdChangeLine"
+        android:showAsAction="ifRoom|withText"    
+        android:icon="@drawable/ic_action_split"
+        android:title="@string/mainMenuChangeLine" />
+          
+  <item android:id="@+id/menuIdSettings"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/mainMenuSettings" />
+  
+  <item android:id="@+id/menuIdHelp"
+      android:showAsAction="ifRoom" 
+  		android:icon="@drawable/ic_action_help"
+  		android:title="@string/mainMenuHelp"
+		/> 
+</menu>
