@@ -294,11 +294,11 @@ public class StopConstants {
 			);
 		
 		/**
-		 * Busï¿½ras 53.350289,-6.252712
+		 * Bus‡ras 53.350289,-6.252712
 		 */
 		redStops.add(
 				new StopInformationModel(
-					"BusÃ¡ras",
+					"Bus‡ras",
 					new LocationBuilder().latitude(53.350289).longitude(-6.252712).location(),5+21
 				)
 			);
