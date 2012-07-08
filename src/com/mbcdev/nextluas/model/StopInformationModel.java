@@ -1,5 +1,6 @@
 package com.mbcdev.nextluas.model;
 
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 
 import android.location.Location;
@@ -72,11 +73,7 @@ public class StopInformationModel {
 	}
 	
 	private String getSuffix(String display) {
-		return
-			display.replaceAll(" ", "+")
-			.replaceAll("'", "%27")
-			.replaceAll("‡", "%E1");
-		
+		return display;
 	}
 	
 	private String getFormattedDistance() {
