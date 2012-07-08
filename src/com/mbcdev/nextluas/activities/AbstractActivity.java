@@ -33,5 +33,7 @@ public abstract class AbstractActivity extends RoboSherlockActivity  {
         // OK!
       }
     });
+    
+    alertDialog.show();
   }
 }
