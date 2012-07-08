@@ -75,7 +75,7 @@ public class StopInformationModel {
 		return
 			display.replaceAll(" ", "+")
 			.replaceAll("'", "%27")
-			.replaceAll("‡", "%26aacute%3B");
+			.replaceAll("‡", "%E1");
 		
 	}
 	
