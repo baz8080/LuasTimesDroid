@@ -60,7 +60,7 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
   private Location currentLocation;
   
   final Handler lookupHandler = new Handler();
-
+ 
   private ArrayAdapter<StopInformationModel> redAdapter;
   private ArrayAdapter<StopInformationModel> greenAdapter;
   private String currentMapKey;
@@ -240,19 +240,19 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
 
     Thread t = new Thread() {
       public void run() {
-
         try {
           stopModel = luasConnector.getStopInfo(stopSuffix, stopName);
+          lookupHandler.post(lookupRunnable);
         } catch (IOException e) {
-          makeInfoDialogue(e.getMessage());
+          lookupHandler.post(errorRunnable);
         }
-
-        lookupHandler.post(lookupRunnable);
       }
     };
     t.start();
   }
 
+  
+  
   /**
    * Update the UI with results from web call
    */
@@ -352,7 +352,13 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
       updateUI();
     }
   };
-
+  
+  final Runnable errorRunnable = new Runnable() {
+    public void run() {
+      resetUI();
+      Toast.makeText(NextLuasActivity.this, "Sorry, there was a network problem looking up the stop.", Toast.LENGTH_LONG).show();
+    };
+  };
 
   @Override
   public void onLocationChanged(Location location) {

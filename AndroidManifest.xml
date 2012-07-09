@@ -3,8 +3,8 @@
     android:installLocation="auto"
     android:launchMode="singleTask"
     package="com.mbcdev.nextluas"
-    android:versionCode="11"
-    android:versionName="2.0.2"
+    android:versionCode="12"
+    android:versionName="2.0.3"
     android:windowSoftInputMode="adjustPan" >
 
     <uses-sdk 

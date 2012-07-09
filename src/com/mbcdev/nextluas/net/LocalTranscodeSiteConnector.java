@@ -31,7 +31,7 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 		response 
 			= Jsoup
 				.connect(url)
-				.timeout(7000)
+				.timeout(10000)
 				.execute();
 		
 		return handleResponse(response, stopName);

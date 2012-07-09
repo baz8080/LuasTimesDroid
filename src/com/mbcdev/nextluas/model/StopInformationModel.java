@@ -1,6 +1,5 @@
 package com.mbcdev.nextluas.model;
 
-import java.net.URLEncoder;
 import java.text.NumberFormat;
 
 import android.location.Location;
