@@ -54,9 +54,6 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
   @Inject private LocationManager lm;
   
   private ResultModel stopModel;
-
-  private String currentStop;
-  private String currentSuffix;
   private Location currentLocation;
   
   final Handler lookupHandler = new Handler();
@@ -173,6 +170,8 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
 
     boolean sortByProximity = prefs.getBoolean(sortByLocationKey, false);
     
+    StopInformationModel before = (StopInformationModel) stopSpinner.getSelectedItem();
+    
     if (sortByProximity) {
       adapter.sort(new DistanceComparator());
     } else {
@@ -180,7 +179,16 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
     }
 
     adapter.notifyDataSetChanged();
-    stopSpinner.setSelection(0);
+    
+    StopInformationModel after = (StopInformationModel) stopSpinner.getSelectedItem();
+    
+    /**
+     * If the selection has changed then we need to fire off another
+     * request, or else we'll be displaying an incorrect set of times.
+     */
+    if (before != null && !before.equals(after)) {
+      lookupStopInfo(after);
+    }
   }
 
   @Override
@@ -224,24 +232,20 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
     }
 
     StopInformationModel model = (StopInformationModel) parent.getItemAtPosition(pos);
-
-    currentStop = model.getDisplayName();
-    currentSuffix = model.getSuffix();
-
-    lookupStopInfo(currentSuffix, currentStop);
+    lookupStopInfo(model);
   }
 
   @Override
   public void onNothingSelected(AdapterView<?> arg0) {}
 
-  private void lookupStopInfo(final String stopSuffix, final String stopName) {
+  private void lookupStopInfo(final StopInformationModel model) {
     
     txtLastUpdated.setText(getText(R.string.updating));
 
     Thread t = new Thread() {
       public void run() {
         try {
-          stopModel = luasConnector.getStopInfo(stopSuffix, stopName);
+          stopModel = luasConnector.getStopInfo(model.getSuffix(), model.getDisplayName());
           lookupHandler.post(lookupRunnable);
         } catch (IOException e) {
           lookupHandler.post(errorRunnable);
@@ -311,7 +315,8 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
   }
 
   private void handleRefreshButton() {
-    lookupStopInfo(currentSuffix, currentStop);
+    StopInformationModel model = (StopInformationModel) stopSpinner.getSelectedItem();
+    lookupStopInfo(model);
   }
 
   private void addTimesToTable(TableLayout layout, List<StopTime> stops) {
