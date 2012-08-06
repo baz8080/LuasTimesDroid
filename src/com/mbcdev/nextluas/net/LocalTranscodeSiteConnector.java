@@ -22,17 +22,14 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 	
 	private static final String TIME_SELECTOR 		= "div.time";
 	
-	private Response response;
-	
-	public ResultModel getStopInfo(String stopSuffix, String stopName) throws IOException {
+	public ResultModel getStopInfo(final String stopSuffix, final String stopName) throws IOException {
 		
 		String url = StopConstants.BASE_URL + stopSuffix;
 		
-		response 
-			= Jsoup
-				.connect(url)
-				.timeout(10000)
-				.execute();
+		Response response = Jsoup
+		    .connect(url)
+        .timeout(10000)
+        .execute();
 		
 		return handleResponse(response, stopName);
 	}

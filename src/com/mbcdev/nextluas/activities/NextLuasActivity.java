@@ -15,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -102,6 +103,11 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
 
     stopSpinner.setOnItemSelectedListener(this);
     
+    // Work-around for http://code.google.com/p/android/issues/detail?id=7786
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+      System.setProperty("http.keepAlive", "false");
+    }
+  
     setupSpinner();
   }
 
