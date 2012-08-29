@@ -252,9 +252,15 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
       public void run() {
         try {
           stopModel = luasConnector.getStopInfo(model.getSuffix(), model.getDisplayName());
-          lookupHandler.post(lookupRunnable);
+          
+          lookupHandler.post(new Runnable() {
+            public void run() {
+              updateUI();
+            }
+          });
+          
         } catch (IOException e) {
-          lookupHandler.post(errorRunnable);
+          lookupHandler.post(new ErrorRunnable(e));
         }
       }
     };
@@ -267,8 +273,10 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
    * Update the UI with results from web call
    */
   protected void updateUI() {
-    if (stopModel == null) {
-      makeInfoDialogue("Results model was null.");
+    
+    if (stopModel == null || (stopModel.getInbound().isEmpty() && stopModel.getOutbound().isEmpty())) {
+      makeInfoDialogue("There was a problem getting the times, perhaps the times on luas.ie are missing?");
+      resetUI();
       return;
     }
   
@@ -357,19 +365,6 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
 
   }
 
-  // Create runnable for posting
-  final Runnable lookupRunnable = new Runnable() {
-    public void run() {
-      updateUI();
-    }
-  };
-  
-  final Runnable errorRunnable = new Runnable() {
-    public void run() {
-      resetUI();
-      Toast.makeText(NextLuasActivity.this, "Sorry, there was a network problem looking up the stop.", Toast.LENGTH_LONG).show();
-    };
-  };
 
   @Override
   public void onLocationChanged(Location location) {
@@ -444,5 +439,27 @@ public class NextLuasActivity extends AbstractActivity implements OnItemSelected
   
   private ArrayAdapter<StopInformationModel> getCurrentAdapter() {
     return redLine() ? redAdapter : greenAdapter;
+  }
+  
+  private class ErrorRunnable implements Runnable {
+
+    private String cause;
+    
+    public ErrorRunnable(Exception e) {
+      cause = e.getMessage();
+      
+      if (cause == null) {
+        cause = "";
+      }
+      
+    }
+    
+    @Override
+    public void run() {
+      resetUI();
+      makeInfoDialogue("Sorry, there was a network problem looking up the stop. This might be solved by trying again.\n\n" + cause);
+//      Toast.makeText(NextLuasActivity.this,  + cause, Toast.LENGTH_LONG).show(); 
+    }
+    
   }
 }

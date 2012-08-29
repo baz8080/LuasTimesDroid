@@ -72,7 +72,7 @@ public class StopInformationModel {
 	}
 	
 	private String getSuffix(String display) {
-		return display;
+		return display.replaceAll(" ", "+");
 	}
 	
 	private String getFormattedDistance() {

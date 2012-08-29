@@ -21,10 +21,7 @@ public abstract class AbstractActivity extends RoboSherlockActivity  {
     Builder alertDialog = new AlertDialog.Builder(this);
     alertDialog.setTitle(R.string.connectorDialogTitle);
 
-    StringBuilder sb = new StringBuilder();
-    sb.append(getString(R.string.connectorDialogMessage)).append("\n").append(error);
-
-    alertDialog.setMessage(sb.toString());
+    alertDialog.setMessage(error);
 
     alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
