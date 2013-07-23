@@ -1,11 +1,14 @@
 package com.mbcdev.nextluas.activities;
 
+import roboguice.util.Ln;
+
 import com.mbcdev.nextluas.R;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.WindowManager.BadTokenException;
 
 public abstract class AbstractActivity extends RoboSherlockActivity  {
 
@@ -31,6 +34,11 @@ public abstract class AbstractActivity extends RoboSherlockActivity  {
       }
     });
     
-    alertDialog.show();
+    try {
+    	alertDialog.show();
+    } catch (BadTokenException e) {
+    	Ln.e("We wanted to show a dialogue but the activity went away.");
+    }
+    
   }
 }

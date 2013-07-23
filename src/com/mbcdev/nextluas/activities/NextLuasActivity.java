@@ -45,8 +45,7 @@ import com.mbcdev.nextluas.model.ResultModel.StopTime;
 import com.mbcdev.nextluas.model.StopInformationModel;
 import com.mbcdev.nextluas.net.LuasInfoConnector;
 import com.mbcdev.nextluas.prefs.MultiSelectListPreference;
-import com.mbcdev.nextluas.sorting.DistanceComparator;
-import com.mbcdev.nextluas.sorting.StopIndexComparator;
+import com.mbcdev.nextluas.sorting.*;
 
 public class NextLuasActivity extends AbstractActivity implements OnItemSelectedListener, LocationListener {
 
