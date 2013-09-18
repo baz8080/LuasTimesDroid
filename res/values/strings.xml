@@ -39,11 +39,11 @@
     <string name="prefDefaultClosestKey">prefDefaultClosestKey</string>
     <string name="prefDefaultClosestTitle">Select Nearest Stop</string>
     <string name="prefDefaultClosestMessage">Auto-select the nearest stop and sort the others by distance.</string>
-    
+
     <string name="prefAutoSwitchKey">prefAutoSwitchKey</string>
     <string name="prefAutoSwitchTitle">Auto Stop Switch</string>
     <string name="prefAutoSwitchMessage">Extends option above, re-selects the nearest stop when location changes</string>
-    
+
     <string name="prefFilterEnableKey">prefFilterEnableKey</string>
     <string name="prefFilterEnableTitle">Enable Stop List Filter</string>
     <string name="prefFilterEnableMessage">Choose only the stops you want to be displayed</string>
