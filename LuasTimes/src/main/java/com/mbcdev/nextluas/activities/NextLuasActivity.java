@@ -42,8 +42,6 @@ import com.mbcdev.nextluas.model.StopInformationModel;
 import com.mbcdev.nextluas.net.LocalTranscodeSiteConnector;
 import com.mbcdev.nextluas.net.LuasInfoConnector;
 import com.mbcdev.nextluas.prefs.MultiSelectListPreference;
-import com.mbcdev.nextluas.sorting.DistanceComparator;
-import com.mbcdev.nextluas.sorting.StopIndexComparator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -141,7 +139,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             System.setProperty("http.keepAlive", "false");
         }
 
-        setupSpinner();
+        stopSpinner.setAdapter(getCurrentAdapter());
     }
 
 
@@ -156,7 +154,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             mLocationManager.requestLocationUpdates(provider, UPDATE_MS, UPDATE_DISTANCE, this);
         }
 
-        handleFilter();
     }
 
     @Override
@@ -198,43 +195,16 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                         }
                     }
                 }
+
                 currentAdapter = fromStopModel(filteredStops);
+                stopSpinner.setAdapter(currentAdapter);
+                stopSpinner.setSelection(0);
             }
         }
-
-        stopSpinner.setAdapter(currentAdapter);
-        stopSpinner.setSelection(0);
     }
 
     private boolean isLineFilteringEnabled() {
         return mSharedPreferences.getBoolean(getString(R.string.prefFilterEnableKey), false);
-    }
-
-    private void handleSorting() {
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<StopInformationModel> adapter = (ArrayAdapter<StopInformationModel>) stopSpinner.getAdapter();
-
-        boolean sortByProximity = mSharedPreferences.getBoolean(getString(R.string.prefDefaultClosestKey), false);
-
-        StopInformationModel before = (StopInformationModel) stopSpinner.getSelectedItem();
-
-        if (sortByProximity) {
-            adapter.sort(new DistanceComparator());
-        } else {
-            adapter.sort(new StopIndexComparator());
-        }
-
-        adapter.notifyDataSetChanged();
-
-        StopInformationModel after = (StopInformationModel) stopSpinner.getSelectedItem();
-
-        /**
-         * If the selection has changed then we need to fire off another
-         * request, or else we'll be displaying an incorrect set of times.
-         */
-        if (before != null && !before.equals(after)) {
-            lookupStopInfo(after);
-        }
     }
 
     @Override
@@ -330,15 +300,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                 || mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected();
     }
 
-    private void setupSpinner() {
-        ArrayAdapter<StopInformationModel> adapter = getCurrentAdapter();
-        stopSpinner.setAdapter(adapter);
-
-        updateStopsWithLocation();
-        handleSorting();
-        handleFilter();
-    }
-
     private void resetUI() {
         inboundTable.removeAllViews();
         outboundTable.removeAllViews();
@@ -402,7 +363,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     public void onLocationChanged(Location location) {
         this.mCurrentLocation = location;
         updateStopsWithLocation();
-        handleSorting();
     }
 
     @Override
@@ -476,7 +436,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 
         resetUI();
-        setupSpinner();
+
+        stopSpinner.setAdapter(getCurrentAdapter());
 
         return true;
     }
