@@ -139,6 +139,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         }
 
         stopSpinner.setAdapter(getCurrentAdapter());
+        handleFilter();
     }
 
     @Override
@@ -167,6 +168,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         mRedAdapter = fromStopModel(StopConstants.getRedStops());
         mGreenAdapter = fromStopModel(StopConstants.getGreenStops());
 
+        ArrayAdapter<StopInformationModel> currentAdapter = getCurrentAdapter();
+
         if (lineFilterEnabled) {
             String[] filterList = null;
 
@@ -181,7 +184,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             } else {
                 List<StopInformationModel> filteredStops = new ArrayList<StopInformationModel>();
 
-                ArrayAdapter<StopInformationModel> currentAdapter = getCurrentAdapter();
+
 
                 for (String stopName : filterList) {
                     for (int i = 0; i < currentAdapter.getCount(); i++) {
@@ -192,10 +195,11 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                 }
 
                 currentAdapter = fromStopModel(filteredStops);
-                stopSpinner.setAdapter(currentAdapter);
-                stopSpinner.setSelection(0);
             }
         }
+
+        stopSpinner.setAdapter(currentAdapter);
+        stopSpinner.setSelection(0);
     }
 
     private boolean isLineFilteringEnabled() {
