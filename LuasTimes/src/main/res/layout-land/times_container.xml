@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timesContainer"
+    style="@style/Fill.Width"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        style="@style/Fill"
+        android:layout_marginRight="@dimen/lt_view_margin"
+        android:layout_weight=".5" >
+
+        <TextView
+            android:id="@+id/inboundLabel"
+            style="@style/Fill.Width"
+            android:text="@string/inbound"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="@dimen/lt_text_large" />
+
+        <View style="@style/BlueLine" />
+
+        <TableLayout
+            android:id="@+id/tblInbound"
+            style="@style/Fill" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/Fill"
+        android:layout_marginLeft="@dimen/lt_view_margin"
+        android:layout_weight=".5" >
+
+        <TextView
+            style="@style/Fill.Width"
+            android:text="@string/outbound"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="@dimen/lt_text_large" />
+
+        <View style="@style/BlueLine" />
+
+        <TableLayout
+            android:id="@+id/tblOutbound"
+            style="@style/Fill" />
+    </LinearLayout>
+
+</LinearLayout>

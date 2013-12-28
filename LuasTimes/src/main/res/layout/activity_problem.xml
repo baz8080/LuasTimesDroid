@@ -1,0 +1,69 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/lt_container_margin"
+    tools:context="com.mbcdev.nextluas.activities.ProblemActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:textSize="@dimen/lt_text_medium"
+            android:textColor="@android:color/primary_text_light"
+            android:text="@string/incorrect_times"
+            android:layout_marginBottom="@dimen/lt_view_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/lt_text_small"
+            android:id="@+id/txtIncorrectTimes"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/lt_container_margin"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/lt_text_medium"
+            android:textColor="@android:color/primary_text_light"
+            android:text="@string/missing_times"
+            android:layout_marginBottom="@dimen/lt_view_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/lt_text_small"
+            android:id="@+id/txtMissingTimes"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_marginBottom="@dimen/lt_container_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/lt_text_medium"
+            android:textColor="@android:color/primary_text_light"
+            android:text="@string/other_problem"
+            android:layout_marginBottom="@dimen/lt_view_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/lt_text_small"
+            android:id="@+id/txtOtherProblem"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_marginBottom="@dimen/lt_container_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+
