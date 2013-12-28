@@ -254,8 +254,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
+    public void onNothingSelected(AdapterView<?> arg0) {}
 
     private void lookupStopInfo(final StopInformationModel model) {
 
@@ -443,6 +442,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             stopSpinner.setAdapter(getCurrentAdapter());
         }
 
+        mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).commit();
         return true;
     }
 
