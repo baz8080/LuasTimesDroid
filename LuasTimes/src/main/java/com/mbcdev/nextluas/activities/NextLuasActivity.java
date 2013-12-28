@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -142,8 +141,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         stopSpinner.setAdapter(getCurrentAdapter());
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -163,8 +160,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     }
 
     private void handleFilter() {
-
-        ArrayAdapter<StopInformationModel> currentAdapter = getCurrentAdapter();
 
         boolean lineFilterEnabled = isLineFilteringEnabled();
 
@@ -186,7 +181,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             } else {
                 List<StopInformationModel> filteredStops = new ArrayList<StopInformationModel>();
 
-                currentAdapter = getCurrentAdapter();
+                ArrayAdapter<StopInformationModel> currentAdapter = getCurrentAdapter();
 
                 for (String stopName : filterList) {
                     for (int i = 0; i < currentAdapter.getCount(); i++) {
@@ -221,7 +216,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                 launchHelp();
                 return true;
             case R.id.menuIdSettings:
-                startActivity(new Intent(this, EditPreferenceActivity.class));
+                startActivityForResult(new Intent(this, EditPreferenceActivity.class), 8080);
                 return true;
             case R.id.menuRefresh:
                 handleRefreshButton();
@@ -232,9 +227,16 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
     }
 
-    /**
-     * On update of spinner
-     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 8080) {
+            handleFilter();
+        }
+
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -274,10 +276,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         t.start();
     }
 
-
-    /**
-     * Update the UI with results from web call
-     */
     protected void updateUI() {
 
         if (mStopModel == null || (mStopModel.getInbound().isEmpty() && mStopModel.getOutbound().isEmpty())) {
@@ -334,7 +332,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             name.setLayoutParams(lp);
             name.setText(st.getName());
             name.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSizes[stopNumber]);
-            Log.d("size", "set size " + fontSizes[stopNumber]);
 
             TextView minutes = new TextView(this);
             minutes.setTextColor(getResources().getColor(android.R.color.secondary_text_light));
@@ -435,9 +432,12 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 
-        resetUI();
+        int oldNavIndex = labelToNavIndex();
 
-        stopSpinner.setAdapter(getCurrentAdapter());
+        if (oldNavIndex != itemPosition) {
+            resetUI();
+            stopSpinner.setAdapter(getCurrentAdapter());
+        }
 
         return true;
     }
@@ -453,6 +453,21 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         }
 
         return label;
+    }
+
+    private int labelToNavIndex() {
+
+        int index = RED_LINE_NAV_INDEX;
+
+        String currentLabel = mSharedPreferences.getString(getString(R.string.prefDefaultLineKey), getString(R.string.redLine));
+
+        if (getString(R.string.redLine).equals(currentLabel)) {
+            index = RED_LINE_NAV_INDEX;
+        } else if (getString(R.string.greenLine).equals(currentLabel)) {
+            index = GREEN_LINE_NAV_INDEX;
+        }
+
+        return index;
     }
 
     protected void makeInfoDialogue(String error) {

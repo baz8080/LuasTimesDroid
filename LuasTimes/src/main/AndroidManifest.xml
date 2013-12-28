@@ -21,7 +21,6 @@
         android:theme="@style/LtTheme" >
         <activity
             android:name="com.mbcdev.nextluas.activities.NextLuasActivity"
-            android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
