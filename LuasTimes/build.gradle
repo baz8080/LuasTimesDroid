@@ -28,6 +28,12 @@ android {
         minSdkVersion 14
         targetSdkVersion 19
     }
+
+    if(project.hasProperty("LuasTimes.signing")
+            && new File(project.property("LuasTimes.signing") + ".gradle").exists()) {
+        apply from: project.property("LuasTimes.signing") + ".gradle";
+    }
+
 }
 
 
