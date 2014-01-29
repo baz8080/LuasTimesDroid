@@ -29,9 +29,23 @@ android {
         targetSdkVersion 19
     }
 
-    if(project.hasProperty("LuasTimes.signing")
-            && new File(project.property("LuasTimes.signing") + ".gradle").exists()) {
-        apply from: project.property("LuasTimes.signing") + ".gradle";
+    signingConfigs {
+        skipdet {
+            storeFile file(STORE_FILE)
+            storePassword STORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.skipdet
+
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard.txt'
+        }
     }
 
 }
