@@ -1,7 +1,5 @@
 package com.mbcdev.nextluas.model;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +21,9 @@ public class ResultModel {
 	
 	private List<StopTime> outbound;
 
-    private PrettyTime mPrettyTime;
-	
 	public ResultModel() {		
 		this.inbound 		= new ArrayList<>(5);
 		this.outbound 		= new ArrayList<>(5);
-        this.mPrettyTime    = new PrettyTime();
 	}
 
 	@Override
