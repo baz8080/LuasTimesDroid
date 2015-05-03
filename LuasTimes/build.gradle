@@ -29,6 +29,13 @@ android {
         targetSdkVersion 22
     }
 
+    dexOptions {
+        if (System.getenv("CI") != null) {
+            println "Running CI: disabling preDexLibraries"
+            preDexLibraries = false
+        }
+    }
+
     signingConfigs {
         skipdet {
             storeFile file("../scripts/release.keystore")
