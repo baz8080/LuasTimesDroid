@@ -32,15 +32,15 @@ android {
     signingConfigs {
         skipdet {
             storeFile file("./scripts/release.keystore")
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
+            storePassword System.getenv("LT_RELEASE_PASSWORD")
+            keyAlias System.getenv("LT_RELEASE_ALIAS")
+            keyPassword System.getenv("LT_RELEASE_PASSWORD")
         }
     }
 
     buildTypes {
         release {
-//            signingConfig signingConfigs.skipdet
+            signingConfig signingConfigs.skipdet
 
             minifyEnabled true
             proguardFile getDefaultProguardFile('proguard-android.txt')
