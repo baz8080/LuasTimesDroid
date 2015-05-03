@@ -29,18 +29,18 @@ android {
         targetSdkVersion 22
     }
 
-    signingConfigs {
-        skipdet {
-            storeFile file(STORE_FILE)
-            storePassword STORE_PASSWORD
-            keyAlias KEY_ALIAS
-            keyPassword KEY_PASSWORD
-        }
-    }
+//    signingConfigs {
+//        skipdet {
+//            storeFile file(STORE_FILE)
+//            storePassword STORE_PASSWORD
+//            keyAlias KEY_ALIAS
+//            keyPassword KEY_PASSWORD
+//        }
+//    }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.skipdet
+//            signingConfig signingConfigs.skipdet
 
             minifyEnabled true
             proguardFile getDefaultProguardFile('proguard-android.txt')
