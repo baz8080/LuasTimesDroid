@@ -21,5 +21,5 @@ before_install:
   -in scripts/keystore.enc -out scripts/release.keystore -d
 env:
   global:
-  - secure: IYENZeLzfPTPZZFsWE7HogFMhiifGYuT5mUHmDt7KwpGHPUMg+jJX4OoE9+bzVeR0dib6NM+lOVszMNXHUFRiBK8xMQJsCe5r7HkRL8OlYaJ23qRfHMUAnk6Ii8xUbblpCqFWaS9mbF0tGw4aZZeGPR9GZf5vhgW6XyS5QTFQSs=
   - secure: AdT+w9znWrkVLci5zzulDEwkAzeCEQtXLiOJbWGfuViJD9hZb+Iby7V2WesroskHsrqUFItGoLoItzYZMrhAIrX6d/P9ZxwTwRqVy/gdx/6bL0LQG+cQCPfvUhCznj1VR6WKeevN07y9BKUl8Piv6bdhy27q/BjNGWrUlFFYgwc=
+  - secure: oBykuOc8UuEDp1EImT0PYRqXrrQNNBEo8zdtpgbqEBl0+w7W5nsaCeFeNfb8Y+lA6WhMEokjQvO5ciBgXedTks29Sc30HukGRy1dv2cyJeB+JE6Y3Khvvjef44Q8nc5EZwhGBMRj76n0Wl+6BacE24DRZuH14qOr2pMOLQ+NW84=
