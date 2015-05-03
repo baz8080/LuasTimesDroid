@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.mbcdev.nextluas.R;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.Views;
+
 
 public class ProblemActivity extends Activity {
 
@@ -27,7 +28,7 @@ public class ProblemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
 
-        Views.inject(this);
+        ButterKnife.inject(this);
 
         txtIncorrectTimes.setMovementMethod(LinkMovementMethod.getInstance());
         txtIncorrectTimes.setText(Html.fromHtml(getString(R.string.incorrect_times_html)));

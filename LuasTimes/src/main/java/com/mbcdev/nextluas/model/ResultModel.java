@@ -6,11 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ResultModel {
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
 	
 	private String name;
 	
@@ -25,18 +26,18 @@ public class ResultModel {
     private PrettyTime mPrettyTime;
 	
 	public ResultModel() {		
-		this.inbound 		= new ArrayList<StopTime>(5);
-		this.outbound 		= new ArrayList<StopTime>(5);
+		this.inbound 		= new ArrayList<>(5);
+		this.outbound 		= new ArrayList<>(5);
         this.mPrettyTime    = new PrettyTime();
 	}
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		
-		sb.append("name: "	 + name).append("\n");
-		sb.append("terminus: " + terminus).append("\n");
-		sb.append("last updated: "     + lastUpdated).append("\n");
+		sb.append("name: ").append(name).append("\n");
+		sb.append("terminus: ").append(terminus).append("\n");
+		sb.append("last updated: ").append(lastUpdated).append("\n");
 		
 		sb.append("Inbound").append("\n");
 		

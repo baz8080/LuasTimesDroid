@@ -7,7 +7,7 @@
     <string name="greenLine">Green Line</string>
     <string name="btnReload">Refresh</string>
     <string name="noNetwork">Can\'t access the Internet, please check your connection</string>
-    <string name="connectorDialogTitle"></string>
+    <string name="connectorDialogTitle">Problem getting times</string>
     <string name="connectorDialogMessage">Something went wrong when parsing the Luas site, please let the developer know!</string>
     <string name="ok">OK</string>
     <string name="no">No</string>

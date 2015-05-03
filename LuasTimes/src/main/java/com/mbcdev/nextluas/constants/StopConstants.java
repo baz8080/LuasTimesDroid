@@ -23,10 +23,10 @@ public class StopConstants {
 		return names;
 	}
 	
-	private static final List<StopInformationModel> redStops = new ArrayList<StopInformationModel>(30);
+	private static final List<StopInformationModel> redStops = new ArrayList<>(30);
 	
 	
-	private static final List<StopInformationModel> greenStops = new ArrayList<StopInformationModel>(30);
+	private static final List<StopInformationModel> greenStops = new ArrayList<>(30);
 	
 	static {
 		

@@ -67,16 +67,16 @@ public class MultiSelectListPreference extends ListPreference {
 
 		String[] vals = parseStoredValue(getValue());
 		if (vals != null) {
-			for (int j = 0; j < vals.length; j++) {
-				String val = vals[j].trim();
-				for (int i = 0; i < entryValues.length; i++) {
-					CharSequence entry = entryValues[i];
-					if (entry.equals(val)) {
-						clickedIndices[i] = true;
-						break;
-					}
-				}
-			}
+            for (String val1 : vals) {
+                String val = val1.trim();
+                for (int i = 0; i < entryValues.length; i++) {
+                    CharSequence entry = entryValues[i];
+                    if (entry.equals(val)) {
+                        clickedIndices[i] = true;
+                        break;
+                    }
+                }
+            }
 		}
 	}
 

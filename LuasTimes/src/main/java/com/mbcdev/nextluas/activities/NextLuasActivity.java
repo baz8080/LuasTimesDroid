@@ -46,8 +46,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.Views;
 
 
 public class NextLuasActivity extends Activity implements OnItemSelectedListener, LocationListener, ActionBar.OnNavigationListener {
@@ -91,7 +91,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         setContentView(R.layout.luas_ads);
 
-        Views.inject(this);
+        ButterKnife.inject(this);
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -182,7 +182,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             if (filterList.length == 0 || (filterList.length == 1 && filterList[0].equals(""))) {
                 //Ln.d("Filter enabled but no stops selected, defaulting to all");
             } else {
-                List<StopInformationModel> filteredStops = new ArrayList<StopInformationModel>();
+                List<StopInformationModel> filteredStops = new ArrayList<>();
 
 
 
@@ -377,11 +377,11 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).commit();
+        mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).apply();
     }
 
     private ArrayAdapter<StopInformationModel> fromStopModel(List<StopInformationModel> stopList) {
-        ArrayAdapter<StopInformationModel> adapter = new ArrayAdapter<StopInformationModel>(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<StopInformationModel> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
 
         for (StopInformationModel model : stopList) {
             adapter.add(model);
@@ -442,7 +442,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             stopSpinner.setAdapter(getCurrentAdapter());
         }
 
-        mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).commit();
+        mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).apply();
         return true;
     }
 
