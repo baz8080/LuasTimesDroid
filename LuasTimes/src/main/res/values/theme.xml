@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="LtTheme" parent="android:style/Theme.Holo.Light.DarkActionBar">
+    <style name="LtTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Set AppCompat’s actionBarStyle -->
+        <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
 
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+
+        <!-- Support library compatibility -->
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
+
 </resources>
