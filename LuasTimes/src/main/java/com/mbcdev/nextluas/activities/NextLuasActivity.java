@@ -1,7 +1,6 @@
 package com.mbcdev.nextluas.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -50,7 +51,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class NextLuasActivity extends Activity implements OnItemSelectedListener, LocationListener, ActionBar.OnNavigationListener {
+public class NextLuasActivity extends AppCompatActivity implements OnItemSelectedListener, LocationListener, android.support.v7.app.ActionBar.OnNavigationListener {
 
     protected static final int UPDATE_MS = 15000;
     protected static final int UPDATE_DISTANCE = 10;
@@ -89,19 +90,21 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.luas_ads);
-
+        setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
         SpinnerAdapter navigationSpinnerAdapter = ArrayAdapter.createFromResource(
-                getActionBar().getThemedContext(),
+                getSupportActionBar().getThemedContext(),
                 R.array.lineNamesArray,
                 android.R.layout.simple_spinner_dropdown_item);
 
-        getActionBar().setListNavigationCallbacks(navigationSpinnerAdapter, this);
+        getSupportActionBar().setListNavigationCallbacks(navigationSpinnerAdapter, this);
 
         mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -120,7 +123,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             navIndexToSet = GREEN_LINE_NAV_INDEX;
         }
 
-        getActionBar().setSelectedNavigationItem(navIndexToSet);
+        getSupportActionBar().setSelectedNavigationItem(navIndexToSet);
 
         mCurrentLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
@@ -177,6 +180,10 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                 filterList = mSharedPreferences.getString(getString(R.string.prefStopListRedKey), "").split(MultiSelectListPreference.SEPARATOR);
             } else if (greenLine()) {
                 filterList = mSharedPreferences.getString(getString(R.string.prefStopListGreenKey), "").split(MultiSelectListPreference.SEPARATOR);
+            }
+
+            if (filterList == null) {
+                filterList = new String[0];
             }
 
             if (filterList.length == 0 || (filterList.length == 1 && filterList[0].equals(""))) {
@@ -421,11 +428,11 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     }
 
     private boolean redLine() {
-        return RED_LINE_NAV_INDEX == getActionBar().getSelectedNavigationIndex();
+        return RED_LINE_NAV_INDEX == getSupportActionBar().getSelectedNavigationIndex();
     }
 
     private boolean greenLine() {
-        return GREEN_LINE_NAV_INDEX == getActionBar().getSelectedNavigationIndex();
+        return GREEN_LINE_NAV_INDEX == getSupportActionBar().getSelectedNavigationIndex();
     }
 
     private ArrayAdapter<StopInformationModel> getCurrentAdapter() {
@@ -450,9 +457,9 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         String label = getString(R.string.redLine);
 
-        if (RED_LINE_NAV_INDEX == getActionBar().getSelectedNavigationIndex()) {
+        if (RED_LINE_NAV_INDEX == getSupportActionBar().getSelectedNavigationIndex()) {
             label = getString(R.string.redLine);
-        } else if (GREEN_LINE_NAV_INDEX == getActionBar().getSelectedNavigationIndex()){
+        } else if (GREEN_LINE_NAV_INDEX == getSupportActionBar().getSelectedNavigationIndex()){
             label = getString(R.string.greenLine);
         }
 
