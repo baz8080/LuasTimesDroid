@@ -1,5 +1,10 @@
-Animated refresh icon.
-Hook up footer to bottom of screen.
-Take out nearest geo, possibly replace with action item.
-
-Skip predex on CI
+* Material design
+    * Navigation modes deprecated: look into http://developer.android.com/reference/android/support/v4/view/PagerTabStrip.html
+    * New padding and spacing, new layout entirely really
+*  Automated tests
+*  Migrate PreferencesActivity to PreferencesFragment
+*  Tablet UI
+*  Animated refresh icon.
+*  Hook up footer to bottom of screen.
+*  Take out nearest geo, possibly replace with action item.
+*  Update to new admob: https://developers.google.com/mobile-ads-sdk/docs/admob/android/quick-start
