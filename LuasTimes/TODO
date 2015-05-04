@@ -1,4 +1,4 @@
-* Material design
+* Material design - http://android-developers.blogspot.ie/2014/10/appcompat-v21-material-design-for-pre.html
     * Navigation modes deprecated: look into http://developer.android.com/reference/android/support/v4/view/PagerTabStrip.html
     * New padding and spacing, new layout entirely really
 *  Automated tests
