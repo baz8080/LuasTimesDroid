@@ -1,6 +1,10 @@
-* Material design - http://android-developers.blogspot.ie/2014/10/appcompat-v21-material-design-for-pre.html
+* Material design
+        * http://android-developers.blogspot.ie/2014/10/appcompat-v21-material-design-for-pre.html
+        * http://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
+        * http://www.google.com/design/spec/style/typography.html#typography-styles
     * Navigation modes deprecated: look into http://developer.android.com/reference/android/support/v4/view/PagerTabStrip.html
     * New padding and spacing, new layout entirely really
+    * icon http://commons.wikimedia.org/wiki/Category:Tram_icons#/media/File:Tranvia_sevilla.svg and high res resources
 *  Automated tests
 *  Migrate PreferencesActivity to PreferencesFragment
 *  Tablet UI

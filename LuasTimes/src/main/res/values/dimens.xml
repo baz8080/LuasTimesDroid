@@ -7,5 +7,8 @@
     <dimen name="lt_text_micro">14sp</dimen>
     <dimen name="lt_container_margin">16dp</dimen>
     <dimen name="lt_view_margin">8sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>
