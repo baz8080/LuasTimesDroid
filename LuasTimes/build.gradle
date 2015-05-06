@@ -10,14 +10,14 @@ buildscript {
 apply plugin: 'com.android.application'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile group: 'com.jakewharton', name: 'butterknife', version: '6.1.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.8.2'
-    compile group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '3.2.7.Final'
+    compile "com.android.support:appcompat-v7:22.1.1"
 }
 
 android {

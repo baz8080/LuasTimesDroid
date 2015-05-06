@@ -1,7 +1,7 @@
 package com.mbcdev.nextluas.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class ProblemActivity extends Activity {
+public class ProblemActivity extends AppCompatActivity {
 
     @InjectView(R.id.txtIncorrectTimes)
     TextView txtIncorrectTimes;

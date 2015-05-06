@@ -62,5 +62,11 @@
     <string name="other_problem">Other problem?</string>
     <string name="incorrect_times">Incorrect times?</string>
     <string name="missing_times">Missing times?</string>
+    <string name="title_activity_material_luas">MaterialLuas</string>
+
+    <string name="hello_world">Hello world!</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StopConstants {
 	
-	public static final String BASE_URL = "http://www.luas.ie/luaspid.html?get=";
+	public static final String BASE_URL = "http://m.luas.ie/luaspid.html?get=";
 	
 	public static CharSequence[] getStopNameArray(List<StopInformationModel> list) {
 		
