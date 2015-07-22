@@ -25,13 +25,14 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 	public ResultModel getStopInfo(final String stopSuffix, final String stopName) throws IOException {
 		
 		String url = StopConstants.BASE_URL + stopSuffix;
-		
-		Response response = Jsoup
-		    .connect(url)
-        .timeout(15000)
-        .execute();
-		
-		return handleResponse(response, stopName);
+
+        Response response = Jsoup
+                .connect(url)
+                .validateTLSCertificates(false)
+                .timeout(15000)
+                .execute();
+
+        return handleResponse(response, stopName);
 	}
 	
 	
