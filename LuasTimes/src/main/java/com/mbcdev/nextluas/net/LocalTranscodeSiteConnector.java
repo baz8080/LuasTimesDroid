@@ -2,6 +2,7 @@ package com.mbcdev.nextluas.net;
 
 import com.mbcdev.nextluas.constants.StopConstants;
 import com.mbcdev.nextluas.model.ResultModel;
+import com.mbcdev.nextluas.model.StopTime;
 
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -11,13 +12,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Date;
-                                                                                                                                                                      
+import java.util.List;
+
 public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 
-	private static final String INBOUND_SELECTOR	= "div.Inbound";
-	
-	private static final String OUTBOUND_SELECTOR   = "div.Outbound"; 
-	
+	private static final String MAIN_SELECTOR = "div";
+
 	private static final String LOCATION_SELECTOR 	= "div.location";
 	
 	private static final String TIME_SELECTOR 		= "div.time";
@@ -26,56 +26,49 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 		
 		String url = StopConstants.BASE_URL + stopSuffix;
 
-        Response response = Jsoup
-                .connect(url)
+		ResultModel model = new ResultModel();
+		model.setName(stopName);
+
+        Response inboundResponse = Jsoup
+                .connect(url + "&direction=Inbound")
                 .validateTLSCertificates(false)
                 .timeout(15000)
                 .execute();
 
-        return handleResponse(response, stopName);
+		parseResults(inboundResponse, model.getInbound());
+
+		Response outboundResponse = Jsoup
+				.connect(url + "&direction=Outbound")
+				.validateTLSCertificates(false)
+				.timeout(15000)
+				.execute();
+
+		parseResults(outboundResponse, model.getOutbound());
+
+		model.setLastUpdated(new Date());
+		return model;
 	}
-	
-	
-	
-	private ResultModel handleResponse(Response response, String stopName) throws IOException {
-		
-		ResultModel model = new ResultModel();
-		model.setName(stopName);
-		
+
+	private void parseResults(Response response, List<StopTime> stopTimes) throws IOException {
+
 		Document doc = response.parse();
-		
-		Element stage = doc.select(INBOUND_SELECTOR).first();	
+		Element stage = doc.select(MAIN_SELECTOR).first();
 		
 		if (stage != null) {
 						
 			Elements names = stage.select(LOCATION_SELECTOR);
 			Elements times = stage.select(TIME_SELECTOR);
 			
-			for (int i = 0; i < names.size(); i++) {				
-				model.addInbound(
-					names.get(i).text(), times.get(i).text()	
-				);
+			for (int i = 0; i < names.size(); i++) {
+				StopTime stopTime = new StopTime();
+				stopTime.setName(names.get(i).text());
+				stopTime.setMinutes(times.get(i).text());
+				stopTimes.add(stopTime);
 			}
 			
 		} else {
-			// LOG INBOUND EMPTY
+			// LOG EMPTY
 		}
-		
-		stage = doc.select(OUTBOUND_SELECTOR).first();
-		
-		if (stage != null) {
-			Elements names = stage.select(LOCATION_SELECTOR);
-			Elements times = stage.select(TIME_SELECTOR);
-			
-			for (int i = 0; i < names.size(); i++) {				
-				model.addOutbound(
-					names.get(i).text(), times.get(i).text()	
-				);
-			}
-		}
-		
-		model.setLastUpdated(new Date());
-		return model;
 	}
 
 }
