@@ -50,21 +50,7 @@ public class ResultModel {
 		
 		return sb.toString();
 	}
-	
-	public void addInbound(String name, String minutes) {
-		StopTime time = new StopTime();
-		time.setName(name);
-		time.setMinutes(minutes);
-		inbound.add(time);
-	}
-	
-	public void addOutbound(String name, String minutes) {
-		StopTime time = new StopTime();
-		time.setName(name);
-		time.setMinutes(minutes);
-		outbound.add(time);
-	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -106,27 +92,4 @@ public class ResultModel {
 	public List<StopTime> getOutbound() {
 		return outbound;
 	}
-
-	public class StopTime {
-		
-		private String name;
-		
-		private String minutes;
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getMinutes() {
-			return minutes;
-		}
-
-		public void setMinutes(String minutes) {
-			this.minutes = minutes;
-		}	
-	}	
 }

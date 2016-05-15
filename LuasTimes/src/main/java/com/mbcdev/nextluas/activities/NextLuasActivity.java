@@ -36,8 +36,9 @@ import com.mbcdev.nextluas.R;
 import com.mbcdev.nextluas.constants.StopConstants;
 import com.mbcdev.nextluas.location.CriteriaHolder;
 import com.mbcdev.nextluas.model.ResultModel;
-import com.mbcdev.nextluas.model.ResultModel.StopTime;
+
 import com.mbcdev.nextluas.model.StopInformationModel;
+import com.mbcdev.nextluas.model.StopTime;
 import com.mbcdev.nextluas.net.LocalTranscodeSiteConnector;
 import com.mbcdev.nextluas.net.LuasInfoConnector;
 import com.mbcdev.nextluas.prefs.MultiSelectListPreference;
