@@ -32,6 +32,8 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.mbcdev.nextluas.R;
 import com.mbcdev.nextluas.constants.StopConstants;
 import com.mbcdev.nextluas.location.CriteriaHolder;
@@ -93,6 +95,11 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         setContentView(R.layout.luas_ads);
 
         ButterKnife.inject(this);
+
+        AdView adview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adview.loadAd(adRequest);
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
