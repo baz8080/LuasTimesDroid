@@ -19,8 +19,8 @@ deploy:
     repo: baz8080/LuasTimesDroid
     tags: true
 before_install:
-- openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv -in scripts/keystore.enc -out scripts/release.keystore -d
-- openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv -in google-services.json.enc -out LuasTimes/google-services.json -d
+- openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv -in enc.tgz.enc -out enc.tgz -d
+- tar zxf enc.tgz
 env:
   global:
   - secure: AdT+w9znWrkVLci5zzulDEwkAzeCEQtXLiOJbWGfuViJD9hZb+Iby7V2WesroskHsrqUFItGoLoItzYZMrhAIrX6d/P9ZxwTwRqVy/gdx/6bL0LQG+cQCPfvUhCznj1VR6WKeevN07y9BKUl8Piv6bdhy27q/BjNGWrUlFFYgwc=

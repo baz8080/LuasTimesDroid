@@ -17,6 +17,9 @@ build/
 
 # Local configuration file (sdk path, etc)
 local.properties
+release.keystore
+enc.tgz
+google-services.json
 
 .DS_Store
 *.iml
