@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+              xmlns:ads="http://schemas.android.com/apk/res-auto"
     style="@style/Fill"
     android:orientation="vertical" >
 
-    <com.google.ads.AdView
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="a14d6a81097eed2"
-        ads:loadAdOnCreate="true"
-        ads:testDevices="TEST_EMULATOR" />
+        ads:adUnitId="@string/ad_unit_id"/>
 
     <LinearLayout
         style="@style/Fill"
