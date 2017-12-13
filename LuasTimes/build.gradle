@@ -1,36 +1,17 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
-        classpath 'com.google.gms:google-services:3.0.0'
-    }
-}
-
 apply plugin: 'com.android.application'
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-
-    compile group: 'com.jakewharton', name: 'butterknife', version: '6.1.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.9.1'
-    compile 'com.google.firebase:firebase-ads:9.2.0'
 }
 
-apply plugin: 'com.google.gms.google-services'
-
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 26
         applicationId "com.mbcdev.nextluas"
     }
 

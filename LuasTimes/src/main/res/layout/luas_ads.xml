@@ -4,13 +4,6 @@
     style="@style/Fill"
     android:orientation="vertical" >
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/ad_unit_id"/>
-
     <LinearLayout
         style="@style/Fill"
         android:paddingLeft="@dimen/lt_view_margin"

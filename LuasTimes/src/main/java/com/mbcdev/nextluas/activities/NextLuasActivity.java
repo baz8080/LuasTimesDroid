@@ -6,9 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -32,13 +29,9 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.mbcdev.nextluas.R;
 import com.mbcdev.nextluas.constants.StopConstants;
-import com.mbcdev.nextluas.location.CriteriaHolder;
 import com.mbcdev.nextluas.model.ResultModel;
-
 import com.mbcdev.nextluas.model.StopInformationModel;
 import com.mbcdev.nextluas.model.StopTime;
 import com.mbcdev.nextluas.net.LocalTranscodeSiteConnector;
@@ -49,23 +42,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
+public class NextLuasActivity extends Activity implements OnItemSelectedListener, ActionBar.OnNavigationListener {
 
-public class NextLuasActivity extends Activity implements OnItemSelectedListener, LocationListener, ActionBar.OnNavigationListener {
-
-    protected static final int UPDATE_MS = 15000;
-    protected static final int UPDATE_DISTANCE = 10;
-    private static final int RED_LINE_NAV_INDEX     = 0;
-    private static final int GREEN_LINE_NAV_INDEX   = 1;
+    private static final int RED_LINE_NAV_INDEX = 0;
+    private static final int GREEN_LINE_NAV_INDEX = 1;
 
     private ConnectivityManager mConnectivityManager;
-    private LuasInfoConnector   mLuasConnector;
-    private LocationManager     mLocationManager;
-    private ResultModel         mStopModel;
-    private Location            mCurrentLocation;
+    private LuasInfoConnector mLuasConnector;
 
+    private ResultModel mStopModel;
     final Handler mLookupHandler = new Handler();
 
     private ArrayAdapter<StopInformationModel> mRedAdapter;
@@ -73,20 +59,13 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
     private SharedPreferences mSharedPreferences;
 
-    @InjectView(R.id.stopSpinner)
-    Spinner stopSpinner;
+    private Spinner stopSpinner;
 
-    @InjectView(R.id.txtLastUpdated)
-    TextView txtLastUpdated;
+    private TextView txtLastUpdated;
 
-    @InjectView(R.id.tblInbound)
-    TableLayout inboundTable;
+    private TableLayout inboundTable;
 
-    @InjectView(R.id.tblOutbound)
-    TableLayout outboundTable;
-
-    @InjectView(R.id.txtProblem)
-    TextView txtProblem;
+    private TableLayout outboundTable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,15 +73,18 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         setContentView(R.layout.luas_ads);
 
-        ButterKnife.inject(this);
+        stopSpinner = findViewById(R.id.stopSpinner);
+        txtLastUpdated = findViewById(R.id.txtLastUpdated);
+        inboundTable = findViewById(R.id.tblInbound);
+        outboundTable = findViewById(R.id.tblOutbound);
+        TextView txtProblem = findViewById(R.id.txtProblem);
 
-        AdView adview = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        adview.loadAd(adRequest);
+        ActionBar actionBar = getActionBar();
 
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        if (actionBar != null) {
+            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        }
 
         SpinnerAdapter navigationSpinnerAdapter = ArrayAdapter.createFromResource(
                 getActionBar().getThemedContext(),
@@ -112,7 +94,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         getActionBar().setListNavigationCallbacks(navigationSpinnerAdapter, this);
 
         mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mLuasConnector = new LocalTranscodeSiteConnector();
@@ -129,8 +110,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         }
 
         getActionBar().setSelectedNavigationItem(navIndexToSet);
-
-        mCurrentLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         stopSpinner.setOnItemSelectedListener(this);
 
@@ -151,21 +130,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        String provider = mLocationManager.getBestProvider(CriteriaHolder.FINE_CRITERIA, true);
-
-        if (provider != null) {
-            mLocationManager.requestLocationUpdates(provider, UPDATE_MS, UPDATE_DISTANCE, this);
-        }
-
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
-        mLocationManager.removeUpdates(this);
     }
 
     private void handleFilter() {
@@ -366,22 +332,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
     }
 
-
-    @Override
-    public void onLocationChanged(Location location) {
-        this.mCurrentLocation = location;
-        updateStopsWithLocation();
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {}
-
-    @Override
-    public void onProviderEnabled(String provider) {}
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -402,30 +352,6 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     private void launchHelp() {
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mbcdev.com/luas-times-help/"));
         startActivity(i);
-    }
-
-    private void updateStopsWithLocation() {
-
-        if (this.mCurrentLocation == null) {
-            return;
-        }
-
-        updateAdapterWithLocation(getCurrentAdapter());
-    }
-
-    private void updateAdapterWithLocation(ArrayAdapter<StopInformationModel> adapter) {
-
-        for (int i = 0; i < adapter.getCount(); i++) {
-            StopInformationModel model = adapter.getItem(i);
-
-            if (model.getLocation() != null) {
-                float[] results = new float[3];
-                Location.distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), model.getLocation()
-                        .getLatitude(), model.getLocation().getLongitude(), results);
-
-                model.setDistanceFromCurrent(results[0] / 1000);
-            }
-        }
     }
 
     private boolean redLine() {
@@ -508,7 +434,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         private String cause;
 
-        public ErrorRunnable(Exception e) {
+        ErrorRunnable(Exception e) {
             cause = e.getMessage();
 
             if (cause == null) {
