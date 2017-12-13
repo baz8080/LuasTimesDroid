@@ -8,27 +8,17 @@ import android.widget.TextView;
 
 import com.mbcdev.nextluas.R;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 
 public class ProblemActivity extends Activity {
-
-    @InjectView(R.id.txtIncorrectTimes)
-    TextView txtIncorrectTimes;
-
-    @InjectView(R.id.txtMissingTimes)
-    TextView txtMissingTimes;
-
-    @InjectView(R.id.txtOtherProblem)
-    TextView txtOtherProblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
 
-        ButterKnife.inject(this);
+        TextView txtIncorrectTimes = findViewById(R.id.txtIncorrectTimes);
+        TextView txtMissingTimes = findViewById(R.id.txtMissingTimes);
+        TextView txtOtherProblem = findViewById(R.id.txtOtherProblem);
 
         txtIncorrectTimes.setMovementMethod(LinkMovementMethod.getInstance());
         txtIncorrectTimes.setText(Html.fromHtml(getString(R.string.incorrect_times_html)));

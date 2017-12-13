@@ -5,13 +5,14 @@ language: android
 android:
   components:
   - tools
-  - android-22
-  - build-tools-23.0.3
-  - extra-google-google_play_services
+  - android-26
+  - build-tools-26.0.2
   - extra-google-m2repository
   - extra-android-m2repository
   licenses:
-  - android-sdk-license-[0-9a-f]{8}
+   - 'android-sdk-preview-license-.+'
+   - 'android-sdk-license-.+'
+   - '.+'
 script: ./gradlew clean assemble lint
 deploy:
   provider: releases
