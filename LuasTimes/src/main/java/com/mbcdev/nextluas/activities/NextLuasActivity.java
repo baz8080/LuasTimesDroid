@@ -237,7 +237,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         Thread t = new Thread() {
             public void run() {
                 try {
-                    mStopModel = mLuasConnector.getStopInfo(model.getSuffix(), model.getDisplayName());
+                    mStopModel = mLuasConnector.getStopInfo(model.getStopNumber(), model.getDisplayName());
 
                     mLookupHandler.post(new Runnable() {
                         public void run() {
