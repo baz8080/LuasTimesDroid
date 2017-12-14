@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface LuasInfoConnector {
 
-  ResultModel getStopInfo(String stopSuffix, String stopName) throws IOException;
+  ResultModel getStopInfo(int stopNumber, String stopName) throws IOException;
 }

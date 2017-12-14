@@ -16,59 +16,59 @@ import java.util.List;
 
 public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 
-	private static final String MAIN_SELECTOR = "div";
+	private static final String MAIN_SELECTOR = "div.stop-table";
 
-	private static final String LOCATION_SELECTOR 	= "div.location";
-	
-	private static final String TIME_SELECTOR 		= "div.time";
-	
-	public ResultModel getStopInfo(final String stopSuffix, final String stopName) throws IOException {
+	public ResultModel getStopInfo(final int stopNumber, final String stopName) throws IOException {
 		
-		String url = StopConstants.BASE_URL + stopSuffix;
+		String url = StopConstants.BASE_URL + stopNumber;
 
 		ResultModel model = new ResultModel();
 		model.setName(stopName);
 
-        Response inboundResponse = Jsoup
-                .connect(url + "&direction=Inbound")
+        Response response = Jsoup
+                .connect(url)
                 .validateTLSCertificates(false)
                 .timeout(15000)
                 .execute();
 
-		parseResults(inboundResponse, model.getInbound());
-
-		Response outboundResponse = Jsoup
-				.connect(url + "&direction=Outbound")
-				.validateTLSCertificates(false)
-				.timeout(15000)
-				.execute();
-
-		parseResults(outboundResponse, model.getOutbound());
+		parseResults(response, model);
 
 		model.setLastUpdated(new Date());
 		return model;
 	}
 
-	private void parseResults(Response response, List<StopTime> stopTimes) throws IOException {
+	private void parseResults(Response response, ResultModel model) throws IOException {
 
 		Document doc = response.parse();
-		Element stage = doc.select(MAIN_SELECTOR).first();
-		
-		if (stage != null) {
-						
-			Elements names = stage.select(LOCATION_SELECTOR);
-			Elements times = stage.select(TIME_SELECTOR);
-			
-			for (int i = 0; i < names.size(); i++) {
-				StopTime stopTime = new StopTime();
-				stopTime.setName(names.get(i).text());
-				stopTime.setMinutes(times.get(i).text());
-				stopTimes.add(stopTime);
-			}
-			
-		} else {
-			// LOG EMPTY
+		Elements stopTables = doc.select(MAIN_SELECTOR);
+
+		// Expecting two divs with class 'stop-table'
+		if (stopTables != null && stopTables.size() == 2) {
+			extractTimesFromTable(stopTables.get(0), model.getInbound());
+			extractTimesFromTable(stopTables.get(1), model.getOutbound());
 		}
 	}
 
+	private void extractTimesFromTable(Element table, List<StopTime> stops) {
+		if (table != null) {
+			Elements rows = table.getElementsByTag("tr");
+
+			if (rows.size() > 1) {
+				for (int i = 1; i < rows.size(); i++) {
+					Element row = rows.get(i);
+
+					if (row != null) {
+						Elements cells = row.getElementsByTag("td");
+
+						if (cells != null && cells.size() == 2) {
+							StopTime stopTime = new StopTime();
+							stopTime.setName(cells.get(0).text());
+							stopTime.setMinutes(cells.get(1).text());
+							stops.add(stopTime);
+						}
+					}
+				}
+			}
+		}
+	}
 }

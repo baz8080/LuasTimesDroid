@@ -10,12 +10,7 @@
         android:layout_marginRight="@dimen/lt_view_margin"
         android:layout_weight=".5" >
 
-        <TextView
-            android:id="@+id/inboundLabel"
-            style="@style/Fill.Width"
-            android:text="@string/inbound"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="@dimen/lt_text_large" />
+        <include layout="@layout/include_times_header" />
 
         <View style="@style/BlueLine" />
 
@@ -29,11 +24,7 @@
         android:layout_marginLeft="@dimen/lt_view_margin"
         android:layout_weight=".5" >
 
-        <TextView
-            style="@style/Fill.Width"
-            android:text="@string/outbound"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="@dimen/lt_text_large" />
+        <include layout="@layout/include_times_header" />
 
         <View style="@style/BlueLine" />
 
