@@ -66,7 +66,29 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 					}
 				}
 			}
+
+			Element inboundTable = stopTables.get(1);
+
+			if (inboundTable != null) {
+				Elements rows = inboundTable.getElementsByTag("tr");
+
+				if (rows.size() > 1) {
+					for (int i = 1; i < rows.size(); i++) {
+						Element row = rows.get(i);
+
+						if (row != null) {
+							Elements cells = row.getElementsByTag("td");
+
+							if (cells != null && cells.size() == 2) {
+								StopTime stopTime = new StopTime();
+								stopTime.setName(cells.get(0).text());
+								stopTime.setMinutes(cells.get(1).text());
+								outboundTimes.add(stopTime);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
-
 }
