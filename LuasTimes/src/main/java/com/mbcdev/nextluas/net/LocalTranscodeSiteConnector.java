@@ -31,60 +31,40 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
                 .timeout(15000)
                 .execute();
 
-		parseResults(response, model.getOutbound(), model.getInbound());
+		parseResults(response, model);
 
 		model.setLastUpdated(new Date());
 		return model;
 	}
 
-	private void parseResults(Response response, List<StopTime> outboundTimes, List<StopTime> inboundTimes) throws IOException {
+	private void parseResults(Response response, ResultModel model) throws IOException {
 
 		Document doc = response.parse();
 		Elements stopTables = doc.select(MAIN_SELECTOR);
 
+		// Expecting two divs with class 'stop-table'
 		if (stopTables != null && stopTables.size() == 2) {
+			extractTimesFromTable(stopTables.get(0), model.getInbound());
+			extractTimesFromTable(stopTables.get(1), model.getOutbound());
+		}
+	}
 
-			Element outboundTable = stopTables.get(0);
+	private void extractTimesFromTable(Element table, List<StopTime> stops) {
+		if (table != null) {
+			Elements rows = table.getElementsByTag("tr");
 
-			if (outboundTable != null) {
-				Elements rows = outboundTable.getElementsByTag("tr");
+			if (rows.size() > 1) {
+				for (int i = 1; i < rows.size(); i++) {
+					Element row = rows.get(i);
 
-				if (rows.size() > 1) {
-					for (int i = 1; i < rows.size(); i++) {
-						Element row = rows.get(i);
+					if (row != null) {
+						Elements cells = row.getElementsByTag("td");
 
-						if (row != null) {
-							Elements cells = row.getElementsByTag("td");
-
-							if (cells != null && cells.size() == 2) {
-								StopTime stopTime = new StopTime();
-								stopTime.setName(cells.get(0).text());
-								stopTime.setMinutes(cells.get(1).text());
-								inboundTimes.add(stopTime);
-							}
-						}
-					}
-				}
-			}
-
-			Element inboundTable = stopTables.get(1);
-
-			if (inboundTable != null) {
-				Elements rows = inboundTable.getElementsByTag("tr");
-
-				if (rows.size() > 1) {
-					for (int i = 1; i < rows.size(); i++) {
-						Element row = rows.get(i);
-
-						if (row != null) {
-							Elements cells = row.getElementsByTag("td");
-
-							if (cells != null && cells.size() == 2) {
-								StopTime stopTime = new StopTime();
-								stopTime.setName(cells.get(0).text());
-								stopTime.setMinutes(cells.get(1).text());
-								outboundTimes.add(stopTime);
-							}
+						if (cells != null && cells.size() == 2) {
+							StopTime stopTime = new StopTime();
+							stopTime.setName(cells.get(0).text());
+							stopTime.setMinutes(cells.get(1).text());
+							stops.add(stopTime);
 						}
 					}
 				}

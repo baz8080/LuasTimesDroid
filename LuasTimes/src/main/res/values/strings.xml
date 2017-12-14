@@ -62,5 +62,7 @@
     <string name="other_problem">Other problem?</string>
     <string name="incorrect_times">Incorrect times?</string>
     <string name="missing_times">Missing times?</string>
+    <string name="destination">Destination</string>
+    <string name="minutes">Minutes</string>
 
 </resources>

@@ -10,26 +10,7 @@
         android:layout_marginRight="@dimen/lt_view_margin"
         android:layout_weight=".5" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/Wrap"
-                android:layout_weight=".5"
-                android:text="Destination"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="@dimen/lt_text_large" />
-
-            <TextView
-                style="@style/Wrap"
-                android:layout_weight=".5"
-                android:gravity="right"
-                android:text="Minutes"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="@dimen/lt_text_large" />
-
-        </LinearLayout>
+        <include layout="@layout/include_times_header" />
 
         <View style="@style/BlueLine" />
 
@@ -43,26 +24,7 @@
         android:layout_marginLeft="@dimen/lt_view_margin"
         android:layout_weight=".5" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/Wrap"
-                android:layout_weight=".5"
-                android:text="Destination"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="@dimen/lt_text_large" />
-
-            <TextView
-                style="@style/Wrap"
-                android:layout_weight=".5"
-                android:gravity="right"
-                android:text="Minutes"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="@dimen/lt_text_large" />
-
-        </LinearLayout>
+        <include layout="@layout/include_times_header" />
 
         <View style="@style/BlueLine" />
 
