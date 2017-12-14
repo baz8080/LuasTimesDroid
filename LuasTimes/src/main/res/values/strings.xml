@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, NextLuasActivity!</string>
     <string name="app_name">Luas Times</string>
     <string name="redLine">Red Line</string>
     <string name="greenLine">Green Line</string>
     <string name="btnReload">Refresh</string>
     <string name="noNetwork">Can\'t access the Internet, please check your connection</string>
     <string name="connectorDialogTitle">Problem getting times</string>
-    <string name="connectorDialogMessage">Something went wrong when parsing the Luas site, please let the developer know!</string>
     <string name="ok">OK</string>
-    <string name="no">No</string>
-    <string name="quit">Quit App</string>
-    <string name="inbound">INBOUND</string>
-    <string name="outbound">OUTBOUND</string>
     <string name="lastUpdate">Updated at %s</string>
     <string name="updating">Updating…</string>
-    <string name="disclaimer">Times sourced from luas.ie. Please <a href="http://www.luas.ie/contact-form.html">report</a> any inaccuracy to them.</string>
-    <string name="noDefaultTitle">Select a Default Line</string>
-    <string name="noDefaultMessage">You do not have a default line selected, please select a default line in the settings screen now.</string>
-    <string name="switchDefaultTitle">Switch to New Default</string>
-    <string name="switchDefaultMessage">Current line is not your default line, switch to default line now?</string>
 
     <!-- PREFERENCES -->
 
@@ -49,11 +38,8 @@
         <item>Green Line</item>
     </string-array>
 
-    <string name="accessRefresh">Click to refresh times</string>
-    <string name="pick_a_stop">Pick a stop</string>
     <string name="stop">STOP</string>
 
-    <string name="action_settings">Settings</string>
 
     <string name="problems">Problems with times?</string>
     <string name="incorrect_times_html"><![CDATA[Sometimes the times at the stops don\'t match the ones in the app.  This is because the times on the luas website are wrong and that is where this app gets the times from.  You can <a href=\'http://m.luas.ie/contactus\'>report the error to them</a> and they will be able to fix it.]]></string>
