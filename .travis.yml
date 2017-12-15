@@ -1,6 +1,6 @@
 sudo: false
 jdk:
-  - oraclejdk8
+- oraclejdk8
 language: android
 android:
   components:
@@ -10,14 +10,14 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   licenses:
-   - 'android-sdk-preview-license-.+'
-   - 'android-sdk-license-.+'
-   - '.+'
-script: ./gradlew clean assemble lint
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - ".+"
+script: "./gradlew clean assemble lint"
 deploy:
   provider: releases
   api_key:
-    secure: Ze3W3H4AqGpdV6aEb+DPLwkF10tHpLRfUasaY02cKd6G4cupkXlFxmFy2rJiEsodkZtOyt2T+yaOrL6hevDSsA+ycGdl2WsK5oilTiSVsm11Xdqk9F+Ek+GupNh0gwZNd4IqXkhdm085r9yXqooKnblw8KI6wfLVZ4TcuvNw4xA=
+    secure: PBkRsWJIS/jZl1CQ/4FR+50Uq+zi0JX99jN4ros/gEhiMQ7uRqqQz5KbwaqdY/kvWFm+4BYXDa6FQSvdYGCvOxKcGuzClFiSYXU+OOINX8ITB4VoH5fO6U8dZPh7odIEwJKn5kmyYhPMbdh5QNTo4xUIJ/bfK7I0REHdQnU+o4E=
   file:
   - ./LuasTimes/build/outputs/apk/LuasTimes-debug.apk
   - ./LuasTimes/build/outputs/apk/LuasTimes-release.apk
@@ -26,7 +26,8 @@ deploy:
     repo: baz8080/LuasTimesDroid
     tags: true
 before_install:
-- openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv -in enc.tgz.enc -out enc.tgz -d
+- openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv
+  -in enc.tgz.enc -out enc.tgz -d
 - tar zxf enc.tgz
 env:
   global:
