@@ -14,16 +14,6 @@ android:
   - android-sdk-license-.+
   - ".+"
 script: "./gradlew clean assemble lint"
-deploy:
-  provider: releases
-  api_key:
-    secure: PBkRsWJIS/jZl1CQ/4FR+50Uq+zi0JX99jN4ros/gEhiMQ7uRqqQz5KbwaqdY/kvWFm+4BYXDa6FQSvdYGCvOxKcGuzClFiSYXU+OOINX8ITB4VoH5fO6U8dZPh7odIEwJKn5kmyYhPMbdh5QNTo4xUIJ/bfK7I0REHdQnU+o4E=
-  file_glob: true
-  file: "./LuasTimes/build/outputs/apk/*.apk"
-  skip_cleanup: true
-  on:
-    repo: baz8080/LuasTimesDroid
-    tags: true
 before_install:
 - openssl aes-256-cbc -K $encrypted_338cfeec668d_key -iv $encrypted_338cfeec668d_iv
   -in enc.tgz.enc -out enc.tgz -d
@@ -32,3 +22,12 @@ env:
   global:
   - secure: AdT+w9znWrkVLci5zzulDEwkAzeCEQtXLiOJbWGfuViJD9hZb+Iby7V2WesroskHsrqUFItGoLoItzYZMrhAIrX6d/P9ZxwTwRqVy/gdx/6bL0LQG+cQCPfvUhCznj1VR6WKeevN07y9BKUl8Piv6bdhy27q/BjNGWrUlFFYgwc=
   - secure: CvEZolyUwMOcu7EnlxlItTKhdUKiY8QUIexxugtXYgypadEBnhz3BcMWpCV+uNy9rq6dP0FOg6UH5M5gpCUj+DtR687UNVSnPh/yZWC9Pp3gAg9zYDzTbgo6908PqZNAWsO9u7t1vesRzMXQHoheBF0Dm7rXRIJqnFQ5hipZamw=
+deploy:
+  provider: releases
+  api_key:
+    secure: pNAiPkjZe0fHYLLvC45UCrSk+XeZqpF+xVJAUIkMkEnmjsry5WVMm0nORLMsxmG8TffwVjUv/TKzTL+/M0aDU4HdkD/V4NuHlnft122Ct/ioMp0prgCok+ulhhMT8/hAtIssHJMXvNThCqf84wXm6q5wdpfdaP8IGfyHm77L+wQ=
+  file: ./LuasTimes/build/outputs/apk/LuasTimes-release.apk
+  skip_cleanup: true
+  on:
+    repo: baz8080/LuasTimesDroid
+    tags: true
