@@ -3,17 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        style="@style/Wrap"
+        style="@style/Table.Header"
         android:layout_weight=".5"
-        android:text="@string/destination"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="@dimen/lt_text_large" />
+        android:text="@string/destination" />
 
     <TextView
-        style="@style/Wrap"
+        style="@style/Table.Header"
         android:layout_weight=".5"
         android:gravity="end"
-        android:text="@string/minutes"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="@dimen/lt_text_large" />
+        android:text="@string/minutes" />
 </LinearLayout>
