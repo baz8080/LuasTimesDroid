@@ -23,7 +23,6 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 		String url = StopConstants.BASE_URL + stopNumber;
 
 		ResultModel model = new ResultModel();
-		model.setName(stopName);
 
         Response response = Jsoup
                 .connect(url)

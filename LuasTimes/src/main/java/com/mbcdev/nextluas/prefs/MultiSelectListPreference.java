@@ -12,7 +12,7 @@ public class MultiSelectListPreference extends ListPreference {
 
 	private boolean[] clickedIndices;
 
-	public MultiSelectListPreference(Context context, AttributeSet attrs, CharSequence[] stopNames) {
+	MultiSelectListPreference(Context context, AttributeSet attrs, CharSequence[] stopNames) {
 		super(context, attrs);
 
 		setEntries(stopNames);
@@ -21,18 +21,12 @@ public class MultiSelectListPreference extends ListPreference {
 		clickedIndices = new boolean[getEntries().length];
 	}
 
-	public MultiSelectListPreference(Context context) {
-		this(context, null, new CharSequence[] {});
-	}
-
 	@Override
 	public void setEntries(CharSequence[] entries) {
 		super.setEntries(entries);
 		clickedIndices = new boolean[entries.length];
 	}
 
-	
-	
 	@Override
 	protected void onPrepareDialogBuilder(Builder builder) {
 		CharSequence[] entries = getEntries();
@@ -55,7 +49,7 @@ public class MultiSelectListPreference extends ListPreference {
 				});
 	}
 
-	public static String[] parseStoredValue(CharSequence val) {
+	static String[] parseStoredValue(CharSequence val) {
 		if ("".equals(val))
 			return null;
 		else

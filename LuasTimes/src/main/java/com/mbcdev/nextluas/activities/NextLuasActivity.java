@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -333,7 +334,14 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     }
 
     private ArrayAdapter<StopInformationModel> fromStopModel(List<StopInformationModel> stopList) {
-        ArrayAdapter<StopInformationModel> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<StopInformationModel> adapter = new ArrayAdapter<StopInformationModel>(this, android.R.layout.simple_spinner_item){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                view.setPadding(0, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+                return view;
+            }
+        };
 
         for (StopInformationModel model : stopList) {
             adapter.add(model);
