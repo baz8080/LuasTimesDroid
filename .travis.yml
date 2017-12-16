@@ -18,9 +18,8 @@ deploy:
   provider: releases
   api_key:
     secure: PBkRsWJIS/jZl1CQ/4FR+50Uq+zi0JX99jN4ros/gEhiMQ7uRqqQz5KbwaqdY/kvWFm+4BYXDa6FQSvdYGCvOxKcGuzClFiSYXU+OOINX8ITB4VoH5fO6U8dZPh7odIEwJKn5kmyYhPMbdh5QNTo4xUIJ/bfK7I0REHdQnU+o4E=
-  file:
-  - ./LuasTimes/build/outputs/apk/LuasTimes-debug.apk
-  - ./LuasTimes/build/outputs/apk/LuasTimes-release.apk
+  file_glob: true
+  file: "./LuasTimes/build/outputs/apk/*.apk"
   skip_cleanup: true
   on:
     repo: baz8080/LuasTimesDroid
