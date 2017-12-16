@@ -26,7 +26,7 @@ deploy:
   provider: releases
   api_key:
     secure: pNAiPkjZe0fHYLLvC45UCrSk+XeZqpF+xVJAUIkMkEnmjsry5WVMm0nORLMsxmG8TffwVjUv/TKzTL+/M0aDU4HdkD/V4NuHlnft122Ct/ioMp0prgCok+ulhhMT8/hAtIssHJMXvNThCqf84wXm6q5wdpfdaP8IGfyHm77L+wQ=
-  file: ./LuasTimes/build/outputs/apk/LuasTimes-release.apk
+  file: LuasTimes/build/outputs/apk/LuasTimes-release.apk
   skip_cleanup: true
   on:
     repo: baz8080/LuasTimesDroid
