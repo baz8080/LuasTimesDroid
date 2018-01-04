@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -45,8 +46,11 @@ import java.util.List;
 
 public class NextLuasActivity extends Activity implements OnItemSelectedListener, ActionBar.OnNavigationListener {
 
+    private static final String TAG = NextLuasActivity.class.getSimpleName();
+
     private static final int RED_LINE_NAV_INDEX = 0;
     private static final int GREEN_LINE_NAV_INDEX = 1;
+    public static final String LAST_SELECTED_STOP_NAME = "last_selected_stop";
 
     private ConnectivityManager mConnectivityManager;
     private LuasInfoConnector mLuasConnector;
@@ -103,11 +107,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         String defaultLine = mSharedPreferences.getString(getString(R.string.prefDefaultLineKey), getString(R.string.redLine));
 
-        int navIndexToSet = RED_LINE_NAV_INDEX;
-
-        if (defaultLine.equals(getString(R.string.greenLine))) {
-            navIndexToSet = GREEN_LINE_NAV_INDEX;
-        }
+        int navIndexToSet = defaultLine.equals(getString(R.string.greenLine)) ? GREEN_LINE_NAV_INDEX : RED_LINE_NAV_INDEX;
 
         getActionBar().setSelectedNavigationItem(navIndexToSet);
 
@@ -122,6 +122,15 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         stopSpinner.setAdapter(getCurrentAdapter());
         handleFilter();
+    }
+
+    private int getStopPosition(List<StopInformationModel> stopInformationModels, String lastSelectedStopName) {
+        for (StopInformationModel stopInformationModel : stopInformationModels) {
+            if (stopInformationModel.getDisplayName().equals(lastSelectedStopName)) {
+                return stopInformationModels.indexOf(stopInformationModel);
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -139,6 +148,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         ArrayAdapter<StopInformationModel> currentAdapter = getCurrentAdapter();
 
+        List<StopInformationModel> filteredStops = new ArrayList<>();
+
         if (lineFilterEnabled) {
             String[] filterList = null;
 
@@ -149,11 +160,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
             }
 
             if (filterList.length == 0 || (filterList.length == 1 && filterList[0].equals(""))) {
-                //Ln.d("Filter enabled but no stops selected, defaulting to all");
+                Log.d(TAG,"Filter enabled but no stops selected, defaulting to all");
             } else {
-                List<StopInformationModel> filteredStops = new ArrayList<>();
-
-
 
                 for (String stopName : filterList) {
                     for (int i = 0; i < currentAdapter.getCount(); i++) {
@@ -168,7 +176,17 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         }
 
         stopSpinner.setAdapter(currentAdapter);
-        stopSpinner.setSelection(0);
+
+        int selectedPosition = 0;
+
+        String lastSelectedStopName = mSharedPreferences.getString(LAST_SELECTED_STOP_NAME, null);
+        if (lastSelectedStopName != null) {
+            List<StopInformationModel> stops = filteredStops.size() > 0 ? filteredStops :
+                    redLine() ? StopConstants.getRedStops() : StopConstants.getGreenStops();
+            selectedPosition = getStopPosition(stops, lastSelectedStopName);
+        }
+
+        stopSpinner.setSelection(selectedPosition != -1 ? selectedPosition : 0);
     }
 
     private boolean isLineFilteringEnabled() {
@@ -219,6 +237,11 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         }
 
         StopInformationModel model = (StopInformationModel) parent.getItemAtPosition(pos);
+
+        mSharedPreferences.edit()
+                .putString(LAST_SELECTED_STOP_NAME, model.getDisplayName())
+                .apply();
+
         lookupStopInfo(model);
     }
 
