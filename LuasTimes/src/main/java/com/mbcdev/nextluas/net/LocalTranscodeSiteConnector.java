@@ -60,9 +60,11 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 						Elements cells = row.getElementsByTag("td");
 
 						if (cells != null && cells.size() == 2) {
-							StopTime stopTime = new StopTime();
-							stopTime.setName(cells.get(0).text());
-							stopTime.setMinutes(cells.get(1).text());
+							String stopName = cells.get(0).text();
+							String dueAtInMinutes = cells.get(1).text();
+
+							StopTime stopTime = new StopTime(stopName, dueAtInMinutes);
+
 							stops.add(stopTime);
 						}
 					}
