@@ -3,23 +3,21 @@
     package="com.mbcdev.nextluas"
     android:installLocation="auto"
     android:launchMode="singleTask"
-    android:versionCode="020104"
-    android:versionName="2.1.4"
-    android:windowSoftInputMode="adjustPan" >
+    android:windowSoftInputMode="adjustPan">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".LuasApplication"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:allowBackup="true"
-        android:name=".LuasApplication"
-        android:theme="@style/LtTheme" >
+        android:theme="@style/LtTheme">
         <activity
-            android:name="com.mbcdev.nextluas.activities.NextLuasActivity"
-            android:label="@string/app_name" >
+            android:name=".activities.NextLuasActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,13 +25,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mbcdev.nextluas.activities.ProblemActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:name=".activities.ProblemActivity"
+            android:label="@string/app_name" />
         <activity
-            android:name="com.mbcdev.nextluas.activities.EditPreferenceActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:name=".activities.EditPreferenceActivity"
+            android:label="@string/app_name" />
+
     </application>
 
 </manifest>
