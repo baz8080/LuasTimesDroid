@@ -32,9 +32,9 @@ import android.widget.Toast;
 
 import com.mbcdev.nextluas.R;
 import com.mbcdev.nextluas.constants.StopConstants;
-import com.mbcdev.nextluas.model.ResultModel;
 import com.mbcdev.nextluas.model.StopInformation;
 import com.mbcdev.nextluas.model.StopTime;
+import com.mbcdev.nextluas.model.StopTimes;
 import com.mbcdev.nextluas.net.LocalTranscodeSiteConnector;
 import com.mbcdev.nextluas.net.LuasInfoConnector;
 import com.mbcdev.nextluas.prefs.MultiSelectListPreference;
@@ -55,7 +55,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
     private ConnectivityManager mConnectivityManager;
     private LuasInfoConnector mLuasConnector;
 
-    private ResultModel mStopModel;
+    private StopTimes stopTimes;
     final Handler mLookupHandler = new Handler();
 
     private ArrayAdapter<StopInformation> mRedAdapter;
@@ -102,8 +102,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
         mLuasConnector = new LocalTranscodeSiteConnector();
 
-        mRedAdapter = fromStopModel(StopConstants.getRedStops());
-        mGreenAdapter = fromStopModel(StopConstants.getGreenStops());
+        mRedAdapter = frostopTimes(StopConstants.getRedStops());
+        mGreenAdapter = frostopTimes(StopConstants.getGreenStops());
 
         String defaultLine = mSharedPreferences.getString(getString(R.string.prefDefaultLineKey), getString(R.string.redLine));
 
@@ -143,8 +143,8 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         boolean lineFilterEnabled = isLineFilteringEnabled();
 
         // We want to reset the adapters in any case
-        mRedAdapter = fromStopModel(StopConstants.getRedStops());
-        mGreenAdapter = fromStopModel(StopConstants.getGreenStops());
+        mRedAdapter = frostopTimes(StopConstants.getRedStops());
+        mGreenAdapter = frostopTimes(StopConstants.getGreenStops());
 
         ArrayAdapter<StopInformation> currentAdapter = getCurrentAdapter();
 
@@ -171,7 +171,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
                     }
                 }
 
-                currentAdapter = fromStopModel(filteredStops);
+                currentAdapter = frostopTimes(filteredStops);
             }
         }
 
@@ -255,7 +255,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         Thread t = new Thread() {
             public void run() {
                 try {
-                    mStopModel = mLuasConnector.getStopInfo(model.getStopNumber(), model.getDisplayName());
+                    stopTimes = mLuasConnector.getStopTimes(model.getStopNumber(), model.getDisplayName());
 
                     mLookupHandler.post(new Runnable() {
                         public void run() {
@@ -273,19 +273,19 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
 
     protected void updateUI() {
 
-        if (mStopModel == null || (mStopModel.getInbound().isEmpty() && mStopModel.getOutbound().isEmpty())) {
+        if (stopTimes == null || (stopTimes.getInbound().isEmpty() && stopTimes.getOutbound().isEmpty())) {
             makeInfoDialogue("There was a problem getting the times, perhaps the times on luas.ie are missing?");
             resetUI();
             return;
         }
 
-        txtLastUpdated.setText(String.format(getString(R.string.lastUpdate), mStopModel.getFormattedLastUpdated()));
+        txtLastUpdated.setText(String.format(getString(R.string.lastUpdate), stopTimes.getLastUpdatedAt()));
 
         inboundTable.removeAllViews();
-        addTimesToTable(inboundTable, mStopModel.getInbound());
+        addTimesToTable(inboundTable, stopTimes.getInbound());
 
         outboundTable.removeAllViews();
-        addTimesToTable(outboundTable, mStopModel.getOutbound());
+        addTimesToTable(outboundTable, stopTimes.getOutbound());
     }
 
     private boolean networkAvailable() {
@@ -356,7 +356,7 @@ public class NextLuasActivity extends Activity implements OnItemSelectedListener
         mSharedPreferences.edit().putString(getString(R.string.prefDefaultLineKey), navIndexToLabel()).apply();
     }
 
-    private ArrayAdapter<StopInformation> fromStopModel(List<StopInformation> stopList) {
+    private ArrayAdapter<StopInformation> frostopTimes(List<StopInformation> stopList) {
         ArrayAdapter<StopInformation> adapter = new ArrayAdapter<StopInformation>(this, android.R.layout.simple_spinner_item){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {

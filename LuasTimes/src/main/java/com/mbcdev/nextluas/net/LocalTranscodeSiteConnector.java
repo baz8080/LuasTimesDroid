@@ -1,8 +1,8 @@
 package com.mbcdev.nextluas.net;
 
 import com.mbcdev.nextluas.constants.StopConstants;
-import com.mbcdev.nextluas.model.ResultModel;
 import com.mbcdev.nextluas.model.StopTime;
+import com.mbcdev.nextluas.model.StopTimes;
 
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -11,18 +11,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 
 	private static final String MAIN_SELECTOR = "div.stop-table";
 
-	public ResultModel getStopInfo(final int stopNumber, final String stopName) throws IOException {
+	public StopTimes getStopTimes(final int stopNumber, final String stopName) throws IOException {
 		
 		String url = StopConstants.BASE_URL + stopNumber;
-
-		ResultModel model = new ResultModel();
 
         Response response = Jsoup
                 .connect(url)
@@ -30,25 +28,32 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
                 .timeout(15000)
                 .execute();
 
-		parseResults(response, model);
+        StopTimes model = parseResults(response);
 
-		model.setLastUpdated(new Date());
 		return model;
 	}
 
-	private void parseResults(Response response, ResultModel model) throws IOException {
+	private StopTimes parseResults(Response response) throws IOException {
 
 		Document doc = response.parse();
 		Elements stopTables = doc.select(MAIN_SELECTOR);
 
+		List<StopTime> inbound = new ArrayList<>();
+        List<StopTime> outbound = new ArrayList<>();
+
 		// Expecting two divs with class 'stop-table'
 		if (stopTables != null && stopTables.size() == 2) {
-			extractTimesFromTable(stopTables.get(0), model.getInbound());
-			extractTimesFromTable(stopTables.get(1), model.getOutbound());
+			inbound = extractTimesFromTable(stopTables.get(0));
+			outbound = extractTimesFromTable(stopTables.get(1));
 		}
+
+		return new StopTimes(inbound, outbound);
 	}
 
-	private void extractTimesFromTable(Element table, List<StopTime> stops) {
+	private List<StopTime> extractTimesFromTable(Element table) {
+
+	    List<StopTime> stopTimes = new ArrayList<>();
+
 		if (table != null) {
 			Elements rows = table.getElementsByTag("tr");
 
@@ -64,12 +69,13 @@ public class LocalTranscodeSiteConnector implements LuasInfoConnector {
 							String dueAtInMinutes = cells.get(1).text();
 
 							StopTime stopTime = new StopTime(stopName, dueAtInMinutes);
-
-							stops.add(stopTime);
+                            stopTimes.add(stopTime);
 						}
 					}
 				}
 			}
 		}
+
+		return stopTimes;
 	}
 }
